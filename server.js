@@ -3,6 +3,7 @@ var restify = require('restify');
 var server = restify.createServer();
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
+server.use(restify.CORS());
 
 var originRouter = require('./src/routers/article-origin-router');
 originRouter.applyRoutes(server);
