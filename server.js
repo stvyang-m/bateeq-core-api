@@ -23,9 +23,6 @@ motifRouter.applyRoutes(server);
 var originRouter = require('./src/routers/v1/article-origin-router');
 originRouter.applyRoutes(server);
 
-var articleRouter = require('./src/routers/v1/article-router');
-articleRouter.applyRoutes(server);
-
 var seasonRouter = require('./src/routers/v1/article-season-router');
 seasonRouter.applyRoutes(server);
 
@@ -34,6 +31,12 @@ themeRouter.applyRoutes(server);
 
 var typeRouter = require('./src/routers/v1/article-type-router');
 typeRouter.applyRoutes(server);
+
+var variantRouter = require('./src/routers/v1/article-variant-router');
+variantRouter.applyRoutes(server);
+
+var articleRouter = require('./src/routers/v1/article-router');
+articleRouter.applyRoutes(server);
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
