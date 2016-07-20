@@ -1,3 +1,5 @@
+var ValidationError = require('bateeq-module').ValidationError;
+
 function formatResult(apiVersion, statusCode, message, data, error) {
     var result = {
         apiVersion: apiVersion,
@@ -6,7 +8,7 @@ function formatResult(apiVersion, statusCode, message, data, error) {
     }
 
     if (error)
-        result.error = error;
+        result.error = error.errors;
     else if (data)
         result.data = data;
 
@@ -19,6 +21,6 @@ module.exports = {
     },
 
     fail: function(apiVersion, statusCode, error) {
-        return formatResult(apiVersion, statusCode, 'error', null, error);
+        return formatResult(apiVersion, statusCode, error.message, null, error);
     }
 }
