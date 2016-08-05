@@ -5,37 +5,37 @@ server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.CORS());
 
-var brandRouter = require('./src/routers/v1/article-brand-router');
+var brandRouter = require('./src/routers/v1/core/article/article-brand-router');
 brandRouter.applyRoutes(server);
 
-var categoryRouter = require('./src/routers/v1/article-category-router');
+var categoryRouter = require('./src/routers/v1/core/article/article-category-router');
 categoryRouter.applyRoutes(server);
 
-var counterRouter = require('./src/routers/v1/article-counter-router');
+var counterRouter = require('./src/routers/v1/core/article/article-counter-router');
 counterRouter.applyRoutes(server);
 
-var materialRouter = require('./src/routers/v1/article-material-router');
+var materialRouter = require('./src/routers/v1/core/article/article-material-router');
 materialRouter.applyRoutes(server);
 
-var motifRouter = require('./src/routers/v1/article-motif-router');
+var motifRouter = require('./src/routers/v1/core/article/article-motif-router');
 motifRouter.applyRoutes(server);
 
-var originRouter = require('./src/routers/v1/article-origin-router');
+var originRouter = require('./src/routers/v1/core/article/article-origin-router');
 originRouter.applyRoutes(server);
 
-var seasonRouter = require('./src/routers/v1/article-season-router');
+var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
 seasonRouter.applyRoutes(server);
 
-var themeRouter = require('./src/routers/v1/article-theme-router');
+var themeRouter = require('./src/routers/v1/core/article/article-theme-router');
 themeRouter.applyRoutes(server);
 
-var typeRouter = require('./src/routers/v1/article-type-router');
+var typeRouter = require('./src/routers/v1/core/article/article-type-router');
 typeRouter.applyRoutes(server);
 
-var variantRouter = require('./src/routers/v1/article-variant-router');
+var variantRouter = require('./src/routers/v1/core/article/article-variant-router');
 variantRouter.applyRoutes(server);
 
-var articleRouter = require('./src/routers/v1/article-router');
+var articleRouter = require('./src/routers/v1/core/article/article-router');
 articleRouter.applyRoutes(server);
 
 server.listen(process.env.PORT, process.env.IP);

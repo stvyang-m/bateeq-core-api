@@ -1,14 +1,14 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var ArticleBrandManager = require('bateeq-module').article.ArticleBrandManager;
-var db = require('../../db');
-var resultFormatter = require("../../result-formatter");
+var ArticleSeasonManager = require('bateeq-module').core.article.ArticleSeasonManager;
+var db = require('../../../../db');
+var resultFormatter = require("../../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
-router.get('v1/articles/brands', (request, response, next) => {
+router.get('v1/core/articles/seasons', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleBrandManager(db, {
+        var manager = new ArticleSeasonManager(db, {
             username: 'router'
         });
 
@@ -23,12 +23,13 @@ router.get('v1/articles/brands', (request, response, next) => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
             })
+
     })
 });
 
-router.get('v1/articles/brands/:id', (request, response, next) => {
+router.get('v1/core/articles/seasons/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleBrandManager(db, {
+        var manager = new ArticleSeasonManager(db, {
             username: 'router'
         });
 
@@ -47,9 +48,9 @@ router.get('v1/articles/brands/:id', (request, response, next) => {
     })
 });
 
-router.post('v1/articles/brands', (request, response, next) => {
+router.post('v1/core/articles/seasons', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleBrandManager(db, {
+        var manager = new ArticleSeasonManager(db, {
             username: 'router'
         });
 
@@ -57,7 +58,7 @@ router.post('v1/articles/brands', (request, response, next) => {
 
         manager.create(data)
             .then(docId => {
-                response.header('Location', `articles/brands/${docId.toString()}`);
+                response.header('Location', `articles/seasons/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
@@ -69,9 +70,9 @@ router.post('v1/articles/brands', (request, response, next) => {
     })
 });
 
-router.put('v1/articles/brands/:id', (request, response, next) => {
+router.put('v1/core/articles/seasons/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleBrandManager(db, {
+        var manager = new ArticleSeasonManager(db, {
             username: 'router'
         });
 
@@ -91,9 +92,9 @@ router.put('v1/articles/brands/:id', (request, response, next) => {
     })
 });
 
-router.del('v1/articles/brands/:id', (request, response, next) => {
+router.del('v1/core/articles/seasons/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleBrandManager(db, {
+        var manager = new ArticleSeasonManager(db, {
             username: 'router'
         });
 

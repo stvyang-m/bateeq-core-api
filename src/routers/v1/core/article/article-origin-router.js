@@ -1,14 +1,14 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var ArticleManager = require('bateeq-module').article.ArticleManager;
-var db = require('../../db');
-var resultFormatter = require("../../result-formatter");
+var ArticleOriginManager = require('bateeq-module').core.article.ArticleOriginManager;
+var db = require('../../../../db');
+var resultFormatter = require("../../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
-router.get('v1/articles', (request, response, next) => {
+router.get('v1/core/articles/origins', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleManager(db, {
+        var manager = new ArticleOriginManager(db, {
             username: 'router'
         });
 
@@ -27,9 +27,9 @@ router.get('v1/articles', (request, response, next) => {
     })
 });
 
-router.get('v1/articles/:id', (request, response, next) => {
+router.get('v1/core/articles/origins/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleManager(db, {
+        var manager = new ArticleOriginManager(db, {
             username: 'router'
         });
 
@@ -48,9 +48,9 @@ router.get('v1/articles/:id', (request, response, next) => {
     })
 });
 
-router.post('v1/articles', (request, response, next) => {
+router.post('v1/core/articles/origins', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleManager(db, {
+        var manager = new ArticleOriginManager(db, {
             username: 'router'
         });
 
@@ -58,7 +58,7 @@ router.post('v1/articles', (request, response, next) => {
 
         manager.create(data)
             .then(docId => {
-                response.header('Location', `articles/${docId.toString()}`);
+                response.header('Location', `articles/origins/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
@@ -70,9 +70,9 @@ router.post('v1/articles', (request, response, next) => {
     })
 });
 
-router.put('v1/articles/:id', (request, response, next) => {
+router.put('v1/core/articles/origins/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleManager(db, {
+        var manager = new ArticleOriginManager(db, {
             username: 'router'
         });
 
@@ -92,9 +92,9 @@ router.put('v1/articles/:id', (request, response, next) => {
     })
 });
 
-router.del('v1/articles/:id', (request, response, next) => {
+router.del('v1/core/articles/origins/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleManager(db, {
+        var manager = new ArticleOriginManager(db, {
             username: 'router'
         });
 

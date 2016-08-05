@@ -1,14 +1,14 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var ArticleMotifManager = require('bateeq-module').article.ArticleMotifManager;
-var db = require('../../db');
-var resultFormatter = require("../../result-formatter");
+var ArticleCategoryManager = require('bateeq-module').core.article.ArticleCategoryManager;
+var db = require('../../../../db');
+var resultFormatter = require("../../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
-router.get('v1/articles/motifs', (request, response, next) => {
+router.get('v1/core/articles/categories', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleMotifManager(db, {
+        var manager = new ArticleCategoryManager(db, {
             username: 'router'
         });
 
@@ -27,9 +27,9 @@ router.get('v1/articles/motifs', (request, response, next) => {
     })
 });
 
-router.get('v1/articles/motifs/:id', (request, response, next) => {
+router.get('v1/core/articles/categories/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleMotifManager(db, {
+        var manager = new ArticleCategoryManager(db, {
             username: 'router'
         });
 
@@ -48,9 +48,9 @@ router.get('v1/articles/motifs/:id', (request, response, next) => {
     })
 });
 
-router.post('v1/articles/motifs', (request, response, next) => {
+router.post('v1/core/articles/categories', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleMotifManager(db, {
+        var manager = new ArticleCategoryManager(db, {
             username: 'router'
         });
 
@@ -58,7 +58,7 @@ router.post('v1/articles/motifs', (request, response, next) => {
 
         manager.create(data)
             .then(docId => {
-                response.header('Location', `articles/motifs/${docId.toString()}`);
+                response.header('Location', `articles/categories/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
@@ -70,9 +70,9 @@ router.post('v1/articles/motifs', (request, response, next) => {
     })
 });
 
-router.put('v1/articles/motifs/:id', (request, response, next) => {
+router.put('v1/core/articles/categories/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleMotifManager(db, {
+        var manager = new ArticleCategoryManager(db, {
             username: 'router'
         });
 
@@ -92,9 +92,9 @@ router.put('v1/articles/motifs/:id', (request, response, next) => {
     })
 });
 
-router.del('v1/articles/motifs/:id', (request, response, next) => {
+router.del('v1/core/articles/categories/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleMotifManager(db, {
+        var manager = new ArticleCategoryManager(db, {
             username: 'router'
         });
 

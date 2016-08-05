@@ -1,14 +1,14 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var ArticleSeasonManager = require('bateeq-module').article.ArticleSeasonManager;
-var db = require('../../db');
-var resultFormatter = require("../../result-formatter");
+var ArticleThemeManager = require('bateeq-module').core.article.ArticleThemeManager;
+var db = require('../../../../db');
+var resultFormatter = require("../../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
-router.get('v1/articles/seasons', (request, response, next) => {
+router.get('v1/core/articles/themes', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleSeasonManager(db, {
+        var manager = new ArticleThemeManager(db, {
             username: 'router'
         });
 
@@ -27,9 +27,9 @@ router.get('v1/articles/seasons', (request, response, next) => {
     })
 });
 
-router.get('v1/articles/seasons/:id', (request, response, next) => {
+router.get('v1/core/articles/themes/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleSeasonManager(db, {
+        var manager = new ArticleThemeManager(db, {
             username: 'router'
         });
 
@@ -48,9 +48,9 @@ router.get('v1/articles/seasons/:id', (request, response, next) => {
     })
 });
 
-router.post('v1/articles/seasons', (request, response, next) => {
+router.post('v1/core/articles/themes', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleSeasonManager(db, {
+        var manager = new ArticleThemeManager(db, {
             username: 'router'
         });
 
@@ -58,7 +58,7 @@ router.post('v1/articles/seasons', (request, response, next) => {
 
         manager.create(data)
             .then(docId => {
-                response.header('Location', `articles/seasons/${docId.toString()}`);
+                response.header('Location', `articles/themes/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
@@ -70,9 +70,9 @@ router.post('v1/articles/seasons', (request, response, next) => {
     })
 });
 
-router.put('v1/articles/seasons/:id', (request, response, next) => {
+router.put('v1/core/articles/themes/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleSeasonManager(db, {
+        var manager = new ArticleThemeManager(db, {
             username: 'router'
         });
 
@@ -92,9 +92,9 @@ router.put('v1/articles/seasons/:id', (request, response, next) => {
     })
 });
 
-router.del('v1/articles/seasons/:id', (request, response, next) => {
+router.del('v1/core/articles/themes/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleSeasonManager(db, {
+        var manager = new ArticleThemeManager(db, {
             username: 'router'
         });
 
