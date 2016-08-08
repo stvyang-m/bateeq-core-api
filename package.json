@@ -1,23 +1,23 @@
 {
-  "name": "bateeq-article-api",
+  "name": "bateeq-core-api",
   "version": "1.0.0",
-  "description": "RESTful api for bateeq article",
+  "description": "Bateeq RESTful core api",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moonlay/bateeq-article-api.git"
+    "url": "git+https://github.com/danliris/bateeq-core-api.git"
   },
   "author": "Tris Setiawan",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/moonlay/bateeq-article-api/issues"
+    "url": "https://github.com/danliris/bateeq-core-api/issues"
   },
-  "homepage": "https://github.com/moonlay/bateeq-article-api#readme",
+  "homepage": "https://github.com/danliris/bateeq-core-api#readme",
   "dependencies": {
-    "bateeq-module": "git+https://github.com/moonlay/bateeq-module.git",
+    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git",
     "mongo-factory": "^1.0.0",
     "mongodb": "^2.2.1",
     "restify": "^4.1.1",

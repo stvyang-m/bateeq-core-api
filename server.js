@@ -38,5 +38,8 @@ variantRouter.applyRoutes(server);
 var articleRouter = require('./src/routers/v1/core/article/article-router');
 articleRouter.applyRoutes(server);
 
+var moduleRouter = require('./src/routers/v1/core/module-router');
+moduleRouter.applyRoutes(server);
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
