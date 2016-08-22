@@ -41,5 +41,9 @@ articleRouter.applyRoutes(server);
 var moduleRouter = require('./src/routers/v1/core/module-router');
 moduleRouter.applyRoutes(server);
 
+
+var supplierRouter = require('./src/routers/v1/core/supplier-router');
+supplierRouter.applyRoutes(server);
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`)
