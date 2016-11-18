@@ -80,7 +80,7 @@ var supplierRouter = require('./src/routers/v1/master/supplier-router');
 supplierRouter.applyRoutes(server, "v1/master/suppliers");
 
 var powerBiReportRouter = require('./src/routers/v1/core/power-bi-report-router');
-powerBiReportRouter.applyRoutes(server, "v1/powerbi/reports");
+powerBiReportRouter.applyRoutes(server,     "/v1/core/power-bi/reports");
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
