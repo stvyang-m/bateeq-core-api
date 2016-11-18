@@ -7,10 +7,10 @@ var resultFormatter = require("../../../result-formatter");
 const apiVersion = '1.0.0';
 
 const config = {
-    port: process.env.PORT || 3000,
-    accessKey: process.env.POWERBI_ACCESS_KEY || "+Ulcux5S+QM7zMTpsX2bsX+S1kqtTBEum1xnx3e6XadwUfQhedMagPo9BccseN4+NCF8Zq/tYkni9fWjfsF2Eg==",
-    workspaceId: process.env.POWERBI_WORKSPACE_ID || "7348ca21-9d5a-445f-b2f9-9057e418e722",
-    workspaceCollection: process.env.POWERBI_WORKSPACE_COLLECTION || "PowerBIMoonlay"
+    port: process.env.PORT,
+    accessKey: process.env.POWERBI_ACCESS_KEY,
+    workspaceId: process.env.POWERBI_WORKSPACE_ID,
+    workspaceCollection: process.env.POWERBI_WORKSPACE_COLLECTION
 };
 
 const credentials = new msrest.TokenCredentials(config.accessKey, "AppKey");
