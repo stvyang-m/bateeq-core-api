@@ -85,5 +85,8 @@ powerBiReportRouter.applyRoutes(server,     "/v1/core/power-bi/reports");
 var itemsMigrationRouter = require('./src/routers/v1/etl/etl-item-router');
 itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/items");
 
+var salesMigrationRouter = require('./src/routers/v1/etl/etl-sales-router');
+itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sales");
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
