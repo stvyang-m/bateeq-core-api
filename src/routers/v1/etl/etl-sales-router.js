@@ -6,9 +6,18 @@ var resultFormatter = require("../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
+
 router.get('/', (request, response, next) => {
-    SalesMigration.migrate()
-        .then(() => {
-            response.send(200);
-        })
+
+    db.get().then(db => {
+        var instance = new SalesMigration(db, {
+            username: "etl"
+        });
+        instance.migrate()
+            .then(() => {
+                response.send(200);
+            })
+    });
 });
+
+module.exports = router;
