@@ -1,4 +1,4 @@
-var Router = require('restify-router').Router;;
+var Router = require('restify-router').Router;
 var router = new Router();
 var StoreManager = require('bateeq-module').master.StoreManager;
 var db = require('../../../db');
@@ -11,23 +11,22 @@ router.get('/', (request, response, next) => {
         var manager = new StoreManager(db, {
             username: 'router'
         });
-
+        
         var query = request.query;
 
         manager.read(query)
-            .then(docs => {
+            .then(docs => { 
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
                 response.send(200, result);
-
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
 router.get('/:id', (request, response, next) => {
@@ -35,51 +34,20 @@ router.get('/:id', (request, response, next) => {
         var manager = new StoreManager(db, {
             username: 'router'
         });
-
+        
         var id = request.params.id;
 
         manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result);
+                response.send(200, result); 
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
-});
-
-router.get('/:storename/:codeByName', (request, response, next) => {
-    db.get().then(db => {
-        var manager = new StoreManager(db, {
-            username: 'router'
-        });
-
-
-        var storename = request.params.storename;
-
-        var query = request.query;
-        query.filter = {
-            'store.name': storename.toString()
-        };
-
-        manager.read(query)
-            .then(docs => {
-                var result = resultFormatter.ok(apiVersion, 200, docs.data);
-                delete docs.data;
-                result.info = docs;
-                response.send(200, result);
-
-            })
-            .catch(e => {
-                var error = resultFormatter.fail(apiVersion, 400, e);
-                response.send(400, error);
-            })
-
-
-    })
+    });
 });
 
 router.post('/', (request, response, next) => {
@@ -87,21 +55,21 @@ router.post('/', (request, response, next) => {
         var manager = new StoreManager(db, {
             username: 'router'
         });
-
+        
         var data = request.body;
 
         manager.create(data)
             .then(docId => {
-                response.header('Location', `masters/stores/${docId.toString()}`);
+                response.header('Location', `/stores/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
 router.put('/:id', (request, response, next) => {
@@ -109,7 +77,7 @@ router.put('/:id', (request, response, next) => {
         var manager = new StoreManager(db, {
             username: 'router'
         });
-
+        
         var id = request.params.id;
         var data = request.body;
 
@@ -121,9 +89,9 @@ router.put('/:id', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
 router.del('/:id', (request, response, next) => {
@@ -131,7 +99,7 @@ router.del('/:id', (request, response, next) => {
         var manager = new StoreManager(db, {
             username: 'router'
         });
-
+        
         var id = request.params.id;
         var data = request.body;
 
@@ -143,8 +111,8 @@ router.del('/:id', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
-    })
+            });
+    });
 });
 
 
