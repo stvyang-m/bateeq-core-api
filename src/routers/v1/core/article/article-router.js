@@ -1,6 +1,6 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var ArticleManager = require('bateeq-module').core.article.ArticleManager;
+var ArticleManager = require('bateeq-module').master.article.ArticleManager;
 var db = require('../../../../db');
 var resultFormatter = require("../../../../result-formatter");
 
@@ -35,7 +35,7 @@ router.get('v1/core/articles/:id', (request, response, next) => {
 
         var id = request.params.id;
 
-        manager.getById(id)
+        manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result);

@@ -1,14 +1,14 @@
-var Router = require('restify-router').Router;;
+var Router = require('restify-router').Router;
 var router = new Router();
-var ModuleManager = require('bateeq-module').core.ModuleManager;
+var StoreManager = require('bateeq-module').master.StoreManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
-router.get('v1/core/modules', (request, response, next) => {
+router.get('/', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ModuleManager(db, {
+        var manager = new StoreManager(db, {
             username: 'router'
         });
         
@@ -16,26 +16,28 @@ router.get('v1/core/modules', (request, response, next) => {
 
         manager.read(query)
             .then(docs => { 
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
                 response.send(200, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
-router.get('v1/core/modules/:id', (request, response, next) => {
+router.get('/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ModuleManager(db, {
+        var manager = new StoreManager(db, {
             username: 'router'
         });
         
         var id = request.params.id;
 
-        manager.getById(id)
+        manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result); 
@@ -43,35 +45,14 @@ router.get('v1/core/modules/:id', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
-router.get('v1/core/modules/:code', (request, response, next) => {
+router.post('/', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ModuleManager(db, {
-            username: 'router'
-        });
-        
-        var code = request.params.code;
-
-        manager.getByCode(code)
-            .then(doc => {
-                var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result); 
-            })
-            .catch(e => {
-                var error = resultFormatter.fail(apiVersion, 400, e);
-                response.send(400, error);
-            })
-
-    })
-});
-
-router.post('v1/core/modules', (request, response, next) => {
-    db.get().then(db => {
-        var manager = new ModuleManager(db, {
+        var manager = new StoreManager(db, {
             username: 'router'
         });
         
@@ -79,21 +60,21 @@ router.post('v1/core/modules', (request, response, next) => {
 
         manager.create(data)
             .then(docId => {
-                response.header('Location', `inventories/core/module/${docId.toString()}`);
+                response.header('Location', `/stores/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
-router.put('v1/core/modules/:id', (request, response, next) => {
+router.put('/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ModuleManager(db, {
+        var manager = new StoreManager(db, {
             username: 'router'
         });
         
@@ -108,14 +89,14 @@ router.put('v1/core/modules/:id', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
+            });
 
-    })
+    });
 });
 
-router.del('v1/core/modules/:id', (request, response, next) => {
+router.del('/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ModuleManager(db, {
+        var manager = new StoreManager(db, {
             username: 'router'
         });
         
@@ -130,8 +111,8 @@ router.del('v1/core/modules/:id', (request, response, next) => {
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
                 response.send(400, error);
-            })
-    })
+            });
+    });
 });
 
 
