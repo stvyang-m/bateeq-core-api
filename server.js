@@ -88,5 +88,12 @@ itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/items");
 var salesMigrationRouter = require('./src/routers/v1/etl/etl-sales-router');
 salesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sales");
 
+
+var storesMigrationRouter = require('./src/routers/v1/etl/etl-stores-router');
+storesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/stores");
+
+var storagesMigrationRouter = require('./src/routers/v1/etl/etl-storages-router');
+storagesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/storages");
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`);

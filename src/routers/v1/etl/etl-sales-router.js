@@ -13,7 +13,7 @@ router.get('/', (request, response, next) => {
         var instance = new SalesMigration(db, {
             username: "etl"
         });
-        instance.migrate()
+        instance.getDataSales()
             .then(() => {
                 response.send(200);
             })
