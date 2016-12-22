@@ -12,7 +12,7 @@ router.get('/', (request, response, next) => {
         var instance = new ItemMigration(db, {
             username: "etl"
         });
-        instance.migrateDataItems()
+        instance.getDataItems()
             .then(() => {
                 response.send(200);
             })
