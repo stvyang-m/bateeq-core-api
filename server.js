@@ -82,8 +82,11 @@ supplierRouter.applyRoutes(server, "v1/master/suppliers");
 var powerBiReportRouter = require('./src/routers/v1/core/power-bi-report-router');
 powerBiReportRouter.applyRoutes(server,     "/v1/core/power-bi/reports");
 
-var itemsMigrationRouter = require('./src/routers/v1/etl/etl-item-router');
-itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/items");
+var itemsSpMigrationRouter = require('./src/routers/v1/etl/etl-item-router');
+itemsSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/items");
+
+var itemsMigrationRouter = require('./src/routers/v1/etl/etl-sp-item-router');
+itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-items");
 
 var salesMigrationRouter = require('./src/routers/v1/etl/etl-sales-router');
 salesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sales");
@@ -94,6 +97,9 @@ storesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/stores")
 
 var storagesMigrationRouter = require('./src/routers/v1/etl/etl-storages-router');
 storagesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/storages");
+
+var salesSpMigrationRouter = require('./src/routers/v1/etl/etl-sp-sales-router');
+salesSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-sales");
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
