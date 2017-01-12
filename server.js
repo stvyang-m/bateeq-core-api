@@ -101,5 +101,8 @@ storagesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/storag
 var salesSpMigrationRouter = require('./src/routers/v1/etl/etl-sp-sales-router');
 salesSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-sales");
 
+var itemMigrationRouter = require('./src/routers/v1/etl/etl-item');
+itemMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/item");
+
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
