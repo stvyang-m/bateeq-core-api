@@ -7,7 +7,7 @@ var resultFormatter = require("../../../result-formatter");
 const apiVersion = '1.0.0';
 
 
-router.get('/:branch', (request, response, next) => {
+router.get('/', (request, response, next) => {
 
     db.get().then(db => {
         var branch = request.params.branch;
