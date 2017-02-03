@@ -91,7 +91,6 @@ itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-items"
 var salesMigrationRouter = require('./src/routers/v1/etl/etl-sales-router');
 salesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sales");
 
-
 var storesMigrationRouter = require('./src/routers/v1/etl/etl-stores-router');
 storesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/stores");
 
@@ -103,6 +102,15 @@ salesSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-sale
 
 var itemMigrationRouter = require('./src/routers/v1/etl/etl-item');
 itemMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/item");
+
+var etlFactPenjualanRouter = require('./src/routers/v1/etl/etl-fact-penjualan-router');
+etlFactPenjualanRouter.applyRoutes(server, "/v1/etl/fact-penjualan");
+
+var etlFactPenjualanSummaryRouter = require('./src/routers/v1/etl/etl-fact-penjualan-summary-router');
+etlFactPenjualanSummaryRouter.applyRoutes(server, "/v1/etl/fact-penjualan-summary");
+
+var etlDimBranch = require('./src/routers/v1/etl/etl-dim-branch-router');
+etlDimBranch.applyRoutes(server, "/v1/etl/dim-branch");
 
 server.listen(process.env.PORT, process.env.IP);
 console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
