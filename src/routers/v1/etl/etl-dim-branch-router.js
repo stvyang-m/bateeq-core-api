@@ -2,6 +2,7 @@ var Router = require('restify-router').Router;
 var router = new Router();
 var DimBranch = require('bateeq-module').etl.dimBranch;
 var db = require('../../../db');
+var SqlHelper = require('../../../sql-helper')
 var resultFormatter = require("../../../result-formatter");
 
 const apiVersion = '1.0.0';
@@ -9,16 +10,22 @@ const apiVersion = '1.0.0';
 
 router.get('/', (request, response, next) => {
 
-    db.get().then(db => {
-        var instance = new DimBranch(db, {
-            username: "etl"
-        });
+    var mongoDbConnection = db.get();
+    var sql = new SqlHelper();
+    var sqlConnection = sql.startConnection();
 
-        instance.run()
-            .then(() => {
-                response.send(200);
-            })
-    });
+    Promise.all([mongoDbConnection, sqlConnection])
+        .then(result => {
+            var _db = result[0];
+            var instance = new DimBranch(_db, {
+                username: "etl"
+            }, sql);
+
+            instance.run()
+                .then(() => {
+                    response.send(200);
+                })
+        });
 });
 
 module.exports = router;

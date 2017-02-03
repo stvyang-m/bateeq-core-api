@@ -23,7 +23,12 @@
                 "PORT": "9090",
                 "AUTH_SECRET": "DLDEVELOPMENT",
                 "POWERBI_ACCESS_KEY": "DLDEVELOPMENT",
-                "DB_CONNECTIONSTRING": "mongodb://testing:testing@ds015953.mlab.com:15953/unit-testing"
+                // "DB_CONNECTIONSTRING": "mongodb://testing:testing@ds015953.mlab.com:15953/unit-testing"
+                "DB_CONNECTIONSTRING": "mongodb://bateeq:Standar123@sl-us-dal-9-portal.0.dblayer.com:16425/bateeq-dev?authSource=bateeq-dev&ssl=true",
+                "SQL_SERVER" :"efrata.database.windows.net",
+                "SQL_DATABASE" : "testefrata",
+                "SQL_USERNAME" : "Adminbateeq",
+                "SQL_PASSWORD" : "Standar123."
             },
             "externalConsole": false,
             "sourceMaps": false,
