@@ -1,39 +1,44 @@
-"use strict";
+
 var sql = require("mssql");
 
-module.exports = class SqlConnection {
+var config = {
+    server: process.env.SQL_SERVER,
+    database: process.env.SQL_DATABASE,
+    user: process.env.SQL_USERNAME,
+    password: process.env.SQL_PASSWORD,
+    options: {
+        encrypt: true
+    },
+    connectionTimeout: 300 * 60 * 1000,
+    requestTimeout: 60 * 60 * 1000
 
-    constructor() {
-        this.sql = sql;
-        this.config = {
-            server: process.env.SQL_SERVER,
-            database: process.env.SQL_DATABASE,
-            user: process.env.SQL_USERNAME,
-            password: process.env.SQL_PASSWORD,
-            options: {
-                encrypt: true
-            },
-            connectionTimeout: 300 * 60 * 1000,
-            requestTimeout: 60 * 60 * 1000
+};
 
-        };
+module.exports = { 
+    getConnect(){
+        return new Promise((resolve, reject) => {
+            sql.connect(config, function (err) {
+                resolve(new sql.Request());
+            })
+        });
     }
+    ,
 
     startConnection() {
         return new Promise((resolve, reject) => {
-            this.sql.connect(this.config, function (err) {
-                if (err)
+            sql.connect(config, function (err) {
+                if(err)
                     reject(err);
                 resolve(true);
             })
         });
     }
-
+    ,
     transaction() {
-        return new this.sql.Transaction();
+        return new sql.Transaction();
     }
-
+    ,
     transactionRequest(transaction) {
-        return new this.sql.Request(transaction);
+        return new sql.Request(transaction);
     }
 }
