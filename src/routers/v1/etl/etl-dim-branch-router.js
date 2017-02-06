@@ -11,15 +11,15 @@ const apiVersion = '1.0.0';
 router.get('/', (request, response, next) => {
 
     var mongoDbConnection = db.get();
-    var sql = new SqlHelper();
-    var sqlConnection = sql.startConnection();
+    // var sql = new SqlHelper();
+    var sqlConnection = SqlHelper.startConnection();
 
     Promise.all([mongoDbConnection, sqlConnection])
         .then(result => {
             var _db = result[0];
             var instance = new DimBranch(_db, {
                 username: "etl"
-            }, sql);
+            }, SqlHelper);
 
             instance.run()
                 .then(() => {
