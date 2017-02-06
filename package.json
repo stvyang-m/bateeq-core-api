@@ -21,9 +21,9 @@
     "mongo-factory": "^1.0.0",
     "mongodb": "^2.2.1",
     "ms-rest": "^1.15.2",
+    "mssql": "^3.3.0",
     "powerbi-api": "^1.0.1",
     "restify": "^4.1.1",
-    "restify-router": "^0.2.1",
-    "mssql": "^3.3.0"
+    "restify-router": "^0.2.1"
   }
 }
