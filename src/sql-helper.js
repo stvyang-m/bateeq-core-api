@@ -1,8 +1,10 @@
+"use strict";
+var sql = require("mssql");
+
 module.exports = class SqlConnection {
 
     constructor() {
-        this.sql = require("mssql");
-
+        this.sql = sql;
         this.config = {
             server: process.env.SQL_SERVER,
             database: process.env.SQL_DATABASE,
