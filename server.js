@@ -1,21 +1,26 @@
+'use strict';
+
 var restify = require('restify');
 restify.CORS.ALLOW_HEADERS.push('authorization');
 
+var passport = require('passport');
 var server = restify.createServer();
+ 
+
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.CORS({
     headers: ['Content-Disposition']
 }));
 
-server.use(function(request, response, next) {
+server.use(passport.initialize());
+server.use(function (request, response, next) {
     var query = request.query;
     query.order = !query.order ? {} : JSON.parse(query.order);
     query.filter = !query.filter ? {} : JSON.parse(query.filter);
     request.queryInfo = query;
     next();
 });
-
 // var brandRouter = require('./src/routers/v1/core/article/article-brand-router');
 // brandRouter.applyRoutes(server);
 
@@ -58,6 +63,9 @@ bankRouter.applyRoutes(server, "v1/master/banks");
 var cardTypeRouter = require('./src/routers/v1/master/card-type-router');
 cardTypeRouter.applyRoutes(server, "v1/master/card-types");
 
+var uploadFinishedGoodsRouter = require('./src/routers/v1/master/upload-finished-goods-router');
+uploadFinishedGoodsRouter.applyRoutes(server, "v1/master/upload/finished-goods");
+
 var finishedGoodsRouter = require('./src/routers/v1/master/finished-goods-router');
 finishedGoodsRouter.applyRoutes(server, "v1/master/items/finished-goods");
 
@@ -80,7 +88,7 @@ var supplierRouter = require('./src/routers/v1/master/supplier-router');
 supplierRouter.applyRoutes(server, "v1/master/suppliers");
 
 var powerBiReportRouter = require('./src/routers/v1/core/power-bi-report-router');
-powerBiReportRouter.applyRoutes(server,     "/v1/core/power-bi/reports");
+powerBiReportRouter.applyRoutes(server, "/v1/core/power-bi/reports");
 
 var itemsSpMigrationRouter = require('./src/routers/v1/etl/etl-item-router');
 itemsSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/items");
