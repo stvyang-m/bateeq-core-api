@@ -18,8 +18,12 @@
   "homepage": "https://github.com/danliris/bateeq-core-api#readme",
   "dependencies": {
     "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#dev",
+    "fast-csv": "^2.3.0",
     "mongo-factory": "^1.0.0",
     "mongodb": "^2.2.1",
+    "passport": "^0.3.2",
+    "passport-jwt": "^2.1.0",
+    "passport-local": "^1.0.0",
     "ms-rest": "^1.15.2",
     "mssql": "^3.3.0",
     "powerbi-api": "^1.0.1",
