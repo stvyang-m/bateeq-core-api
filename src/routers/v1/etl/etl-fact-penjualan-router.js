@@ -23,6 +23,10 @@ router.get('/', (request, response, next) => {
                 .then(() => {
                     response.send(200);
                 })
+                .catch(e => {
+                    var error = resultFormatter.fail(apiVersion, 400, e);
+                    response.send(400, error);
+                });
         });
 });
 
