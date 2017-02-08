@@ -9,7 +9,8 @@ var fs = require('fs');
 var csv = require('fast-csv');
 
 const apiVersion = '1.0.0';
-router.post('/', passport, (request, response, next) => {
+//router.post('/', passport, (request, response, next) => {
+router.post('/', (request, response, next) => {
     var dateFormat = "DD MMM YYYY";
     var locale = 'id-ID';
     var moment = require('moment');
@@ -18,8 +19,10 @@ router.post('/', passport, (request, response, next) => {
     db.get().then(db => {
         var dataCsv = [];
         var dataAll;
-        var manager = new FinishedGoodsManager(db, request.user);
-
+        // var manager = new FinishedGoodsManager(db, request.user);
+        var manager = new FinishedGoodsManager(db, {
+            username: 'router'
+        });
         fs.createReadStream(request.files.fileUpload.path)
             .pipe(csv())
             .on('data', function (data) {

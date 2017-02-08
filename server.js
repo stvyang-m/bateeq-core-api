@@ -5,7 +5,9 @@ restify.CORS.ALLOW_HEADERS.push('authorization');
 
 var passport = require('passport');
 var server = restify.createServer();
- 
+
+var json2xls = require('json2xls');
+server.use(json2xls.middleware);
 
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
