@@ -17,7 +17,9 @@
   },
   "homepage": "https://github.com/danliris/bateeq-core-api#readme",
   "dependencies": {
+
     "bateeq-module": "git+https://github.com/danliris/bateeq-module.git",
+
     "mongo-factory": "^1.0.0",
     "mongodb": "^2.2.1",
     "ms-rest": "^1.15.2",
