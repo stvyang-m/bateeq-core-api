@@ -17,9 +17,12 @@
   },
   "homepage": "https://github.com/danliris/bateeq-core-api#readme",
   "dependencies": {
-    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#dev",
+
+    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#uat",
     "fast-csv": "^2.3.0",
     "json2xls": "^0.1.2",
+
+
     "mongo-factory": "^1.0.0",
     "mongodb": "^2.2.1",
     "passport": "^0.3.2",
