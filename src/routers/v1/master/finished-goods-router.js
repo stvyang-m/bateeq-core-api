@@ -11,11 +11,11 @@ router.get('/', (request, response, next) => {
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
         });
-        
+
         var query = request.query;
 
         manager.read(query)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
@@ -34,13 +34,13 @@ router.get('/:id', (request, response, next) => {
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
         });
-        
+
         var id = request.params.id;
 
         manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result); 
+                response.send(200, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
@@ -54,15 +54,15 @@ router.get('/code/:code', (request, response, next) => {
     db.get().then(db => {
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
-        }); 
-        var query = request.query; 
-        var code = request.params.code; 
+        });
         var query = request.query;
-        query.filter = { 
+        var code = request.params.code;
+        var query = request.query;
+        query.filter = {
             'code': code
-        }; 
+        };
         manager.read(query)
-            .then(docs => { 
+            .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
@@ -80,7 +80,7 @@ router.post('/', (request, response, next) => {
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
         });
-        
+
         var data = request.body;
 
         manager.create(data)
@@ -102,7 +102,7 @@ router.put('/:id', (request, response, next) => {
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
         });
-        
+
         var id = request.params.id;
         var data = request.body;
 
@@ -124,18 +124,22 @@ router.del('/:id', (request, response, next) => {
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
         });
-        
-        var id = request.params.id;
-        var data = request.body;
 
-        manager.delete(data)
-            .then(docId => {
-                var result = resultFormatter.ok(apiVersion, 204);
-                response.send(204, result);
-            })
-            .catch(e => {
-                var error = resultFormatter.fail(apiVersion, 400, e);
-                response.send(400, error);
+        var id = request.params.id;
+        manager.getSingleById(id)
+            .then((doc) => {
+                var result;
+                if (!doc) {
+                    result = resultFormatter.fail(apiVersion, 404, new Error("data not found"));
+                    response.send(400, error);
+                }
+                else {
+                    return manager.delete(doc)
+                        .then((docId) => {
+                            result = resultFormatter.ok(apiVersion, 204);
+                            response.send(204, result);
+                        });
+                }
             });
     });
 });

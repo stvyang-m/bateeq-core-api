@@ -1,21 +1,28 @@
+'use strict';
+
 var restify = require('restify');
 restify.CORS.ALLOW_HEADERS.push('authorization');
 
+var passport = require('passport');
 var server = restify.createServer();
+
+var json2xls = require('json2xls');
+server.use(json2xls.middleware);
+
 server.use(restify.queryParser());
 server.use(restify.bodyParser());
 server.use(restify.CORS({
     headers: ['Content-Disposition']
 }));
 
-server.use(function(request, response, next) {
+server.use(passport.initialize());
+server.use(function (request, response, next) {
     var query = request.query;
     query.order = !query.order ? {} : JSON.parse(query.order);
     query.filter = !query.filter ? {} : JSON.parse(query.filter);
     request.queryInfo = query;
     next();
 });
-
 // var brandRouter = require('./src/routers/v1/core/article/article-brand-router');
 // brandRouter.applyRoutes(server);
 
@@ -58,6 +65,9 @@ bankRouter.applyRoutes(server, "v1/master/banks");
 var cardTypeRouter = require('./src/routers/v1/master/card-type-router');
 cardTypeRouter.applyRoutes(server, "v1/master/card-types");
 
+var uploadFinishedGoodsRouter = require('./src/routers/v1/master/upload-finished-goods-router');
+uploadFinishedGoodsRouter.applyRoutes(server, "v1/master/upload");
+
 var finishedGoodsRouter = require('./src/routers/v1/master/finished-goods-router');
 finishedGoodsRouter.applyRoutes(server, "v1/master/items/finished-goods");
 
@@ -80,7 +90,7 @@ var supplierRouter = require('./src/routers/v1/master/supplier-router');
 supplierRouter.applyRoutes(server, "v1/master/suppliers");
 
 var powerBiReportRouter = require('./src/routers/v1/core/power-bi-report-router');
-powerBiReportRouter.applyRoutes(server,     "/v1/core/power-bi/reports");
+powerBiReportRouter.applyRoutes(server, "/v1/core/power-bi/reports");
 
 var itemsSpMigrationRouter = require('./src/routers/v1/etl/etl-item-router');
 itemsSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/items");
@@ -90,7 +100,6 @@ itemsMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-items"
 
 var salesMigrationRouter = require('./src/routers/v1/etl/etl-sales-router');
 salesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sales");
-
 
 var storesMigrationRouter = require('./src/routers/v1/etl/etl-stores-router');
 storesMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/stores");
@@ -104,5 +113,21 @@ salesSpMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/sp-sale
 var itemMigrationRouter = require('./src/routers/v1/etl/etl-item');
 itemMigrationRouter.applyRoutes(server, "/v1/etl/migrations/sql2mongo/item");
 
-server.listen(process.env.PORT, process.env.IP);
-console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
+var etlFactPenjualanRouter = require('./src/routers/v1/etl/etl-fact-penjualan-router');
+etlFactPenjualanRouter.applyRoutes(server, "/v1/etl/fact-penjualan");
+
+var etlFactPenjualanSummaryRouter = require('./src/routers/v1/etl/etl-fact-penjualan-summary-router');
+etlFactPenjualanSummaryRouter.applyRoutes(server, "/v1/etl/fact-penjualan-summary");
+
+var etlDimBranch = require('./src/routers/v1/etl/etl-dim-branch-router');
+etlDimBranch.applyRoutes(server, "/v1/etl/dim-branch");
+
+var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
+
+var host = process.env.VCAP_APP_HOST || process.env.IP || "0.0.0.0";
+
+server.listen(port, host);
+console.log(`server created at ${host}:${port}`);
+
+//server.listen(process.env.PORT, process.env.IP);
+//console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
