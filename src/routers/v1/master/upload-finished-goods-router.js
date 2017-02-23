@@ -62,6 +62,9 @@ router.post('/', (request, response, next) => {
                     response.send(404, error);
 
                 }
+            })
+            .on("error", (err) => {
+                response.send(500, err);
             });
     })
 });
