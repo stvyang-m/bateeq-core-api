@@ -122,6 +122,9 @@ etlFactPenjualanSummaryRouter.applyRoutes(server, "/v1/etl/fact-penjualan-summar
 var etlDimBranch = require('./src/routers/v1/etl/etl-dim-branch-router');
 etlDimBranch.applyRoutes(server, "/v1/etl/dim-branch");
 
+var etlDim = require('./src/routers/v1/etl/etl-dim-router');
+etlDim.applyRoutes(server, "/v1/etl/dim");
+
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
 var host = process.env.VCAP_APP_HOST || process.env.IP || "0.0.0.0";
