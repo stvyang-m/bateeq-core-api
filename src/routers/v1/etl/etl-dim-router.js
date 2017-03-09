@@ -40,6 +40,10 @@ router.get('/', (request, response, next) => {
                     var error = resultFormatter.fail(apiVersion, 400, e);
                     response.send(400, error);
                 });
+        })
+        .catch(e => {
+            var error = resultFormatter.fail(apiVersion, 400, e);
+            response.send(400, error);
         });
 });
 
