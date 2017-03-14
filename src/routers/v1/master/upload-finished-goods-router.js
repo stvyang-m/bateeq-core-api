@@ -18,11 +18,29 @@ router.post('/', (request, response, next) => {
 
     db.get().then(db => {
 
+
+        db.collection("migration.log").insert({
+            name: "uploadTest3",
+            data: {
+                "db" : "method entered",
+                dateFormat : dateFormat,
+                locale : locale
+            }
+        });
+
         var dataCsv = [];
         var dataAll;
         // var manager = new FinishedGoodsManager(db, request.user);
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
+        });
+
+
+        db.collection("migration.log").insert({
+            name: "uploadTest2",
+            data: {
+                "1": request.files.fileUpload.path
+            }
         });
 
         fs.createReadStream(request.files.fileUpload.path)
@@ -32,7 +50,16 @@ router.post('/', (request, response, next) => {
             })
             .on('end', function (data) {
                 dataAll = dataCsv;
-                
+
+                /*
+                    Test only
+                 */
+
+                db.collection("migration.log").insert({
+                    name: "uploadTest",
+                    data: dataAll
+                });
+
                 if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama" && dataAll[0][2] === "UOM" && dataAll[0][3] === "Size" && dataAll[0][4] === "HPP" && dataAll[0][5] === "Harga Jual (Domestic)" && dataAll[0][6] === "Harga Jual (Internasional)" && dataAll[0][7] === "RO") {
                     manager.insert(dataAll)
                         .then(doc => {
@@ -57,8 +84,8 @@ router.post('/', (request, response, next) => {
                             }
                         })
                         .catch(e => {
-                            var error = resultFormatter.fail(apiVersion, 500, e);
-                            response.send(500, error);
+                            var error = resultFormatter.fail(apiVersion, 111, e);
+                            response.send(111, error);
                         })
                 } else {
                     var error = resultFormatter.fail(apiVersion, 401, "");
@@ -66,8 +93,14 @@ router.post('/', (request, response, next) => {
                 }
             })
             .on("error", (err) => {
-                var error = resultFormatter.fail(apiVersion, 500, e);
-                response.send(500, err);
+                db.collection("migration.log").insert({
+                    name: "uploadTestError",
+                    data: {
+                        err
+                    }
+                });
+                var error = resultFormatter.fail(apiVersion, 123, e);
+                response.send(123, err);
             });
     })
 });
