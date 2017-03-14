@@ -65,7 +65,7 @@ router.post('/', (request, response, next) => {
                         })
                         .catch(e => {
                             var error = resultFormatter.fail(apiVersion, 500, e);
-                            response.send(500, error);
+                            response.send(111, error);
                         })
                 } else {
                     var error = resultFormatter.fail(apiVersion, 401, "");
