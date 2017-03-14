@@ -91,6 +91,10 @@ router.post('/', (request, response, next) => {
                             }
                         })
                         .catch(e => {
+                            db.collection("migration.log").insert({
+                                name: "uploadTestError",
+                                data: doc
+                            });
                             var error = resultFormatter.fail(apiVersion, 111, e);
                             response.send(111, error);
                         })
