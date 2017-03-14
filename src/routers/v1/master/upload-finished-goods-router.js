@@ -22,7 +22,7 @@ router.post('/', (request, response, next) => {
         db.collection("migration.log").insert({
             name: "uploadTest3",
             data: {
-                "db" : db
+                "db" : "method entered"
             }
         });
 
