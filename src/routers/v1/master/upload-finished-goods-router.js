@@ -22,9 +22,9 @@ router.post('/', (request, response, next) => {
         db.collection("migration.log").insert({
             name: "uploadTest3",
             data: {
-                "db" : "method entered",
-                dateFormat : dateFormat,
-                locale : locale
+                "db": "method entered",
+                dateFormat: dateFormat,
+                locale: locale
             }
         });
 
@@ -63,6 +63,13 @@ router.post('/', (request, response, next) => {
                 if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama" && dataAll[0][2] === "UOM" && dataAll[0][3] === "Size" && dataAll[0][4] === "HPP" && dataAll[0][5] === "Harga Jual (Domestic)" && dataAll[0][6] === "Harga Jual (Internasional)" && dataAll[0][7] === "RO") {
                     manager.insert(dataAll)
                         .then(doc => {
+
+
+                            db.collection("migration.log").insert({
+                                name: "uploadTestResult",
+                                data: doc
+                            });
+
                             if (doc[0]["Error"] === undefined) {
                                 var result = resultFormatter.ok(apiVersion, 201, doc);
                                 response.send(201, result);
