@@ -17,6 +17,15 @@ router.post('/', (request, response, next) => {
     moment.locale(locale);
 
     db.get().then(db => {
+
+
+        db.collection("migration.log").insert({
+            name: "uploadTest3",
+            data: {
+                "db" : db
+            }
+        });
+
         var dataCsv = [];
         var dataAll;
         // var manager = new FinishedGoodsManager(db, request.user);
