@@ -31,7 +31,7 @@ router.post('/', (request, response, next) => {
             .on('end', function (data) {
                 dataAll = dataCsv;
                 if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama" && dataAll[0][2] === "UOM" && dataAll[0][3] === "Size" && dataAll[0][4] === "HPP" && dataAll[0][5] === "Harga Jual (Domestic)" && dataAll[0][6] === "Harga Jual (Internasional)" && dataAll[0][7] === "RO") {
-                    manager.insert(dataAll, request.params.sourceId, request.params.destinationId, request.params.date)
+                    manager.insert(dataAll)
                         .then(doc => {
                             if (doc[0]["Error"] === undefined) {
                                 var result = resultFormatter.ok(apiVersion, 201, doc);
@@ -54,17 +54,16 @@ router.post('/', (request, response, next) => {
                             }
                         })
                         .catch(e => {
-                            var error = resultFormatter.fail(apiVersion, 404, e);
-                            response.send(404, error);
+                            var error = resultFormatter.fail(apiVersion, 500, e);
+                            response.send(500, error);
                         })
                 } else {
-                    var error = resultFormatter.fail(apiVersion, 404, "");
-                    response.send(404, error);
-
+                    var error = resultFormatter.fail(apiVersion, 401, "");
+                    response.send(401, error);
                 }
             })
             .on("error", (err) => {
-                response.send(500, err);
+                response.send(123, err);
             });
     })
 });
