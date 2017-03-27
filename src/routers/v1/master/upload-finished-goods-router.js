@@ -7,6 +7,7 @@ var passport = require('../../../passports/jwt-passport');
 var FinishedGoodsManager = require('bateeq-module').master.FinishedGoodsManager;
 var fs = require('fs');
 var csv = require('fast-csv');
+var PkgCloudHelper = require('../../../pkg-cloud-helper')
 
 const apiVersion = '1.0.0';
 //router.post('/', passport, (request, response, next) => {
@@ -18,29 +19,11 @@ router.post('/', (request, response, next) => {
 
     db.get().then(db => {
 
-
-        db.collection("migration.log").insert({
-            name: "uploadTest3",
-            data: {
-                "db": "method entered",
-                dateFormat: dateFormat,
-                locale: locale
-            }
-        });
-
         var dataCsv = [];
         var dataAll;
         // var manager = new FinishedGoodsManager(db, request.user);
         var manager = new FinishedGoodsManager(db, {
             username: 'router'
-        });
-
-
-        db.collection("migration.log").insert({
-            name: "uploadTest2",
-            data: {
-                "1": request.files.fileUpload.path
-            }
         });
 
         fs.createReadStream(request.files.fileUpload.path)
@@ -51,25 +34,9 @@ router.post('/', (request, response, next) => {
             .on('end', function (data) {
                 dataAll = dataCsv;
 
-                /*
-                    Test only
-                 */
-
-                db.collection("migration.log").insert({
-                    name: "uploadTest",
-                    data: dataAll
-                });
-
                 if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama" && dataAll[0][2] === "UOM" && dataAll[0][3] === "Size" && dataAll[0][4] === "HPP" && dataAll[0][5] === "Harga Jual (Domestic)" && dataAll[0][6] === "Harga Jual (Internasional)" && dataAll[0][7] === "RO") {
                     manager.insert(dataAll)
                         .then(doc => {
-
-
-                            db.collection("migration.log").insert({
-                                name: "uploadTestResult",
-                                data: doc
-                            });
-
                             if (doc[0]["Error"] === undefined) {
                                 var result = resultFormatter.ok(apiVersion, 201, doc);
                                 response.send(201, result);
@@ -91,12 +58,8 @@ router.post('/', (request, response, next) => {
                             }
                         })
                         .catch(e => {
-                            db.collection("migration.log").insert({
-                                name: "uploadTestError",
-                                data: doc
-                            });
-                            var error = resultFormatter.fail(apiVersion, 111, e);
-                            response.send(111, error);
+                            var error = resultFormatter.fail(apiVersion, 500, e);
+                            response.send(500, error);
                         })
                 } else {
                     var error = resultFormatter.fail(apiVersion, 401, "");
@@ -104,16 +67,73 @@ router.post('/', (request, response, next) => {
                 }
             })
             .on("error", (err) => {
-                db.collection("migration.log").insert({
-                    name: "uploadTestError",
-                    data: {
-                        err
-                    }
-                });
-                var error = resultFormatter.fail(apiVersion, 123, e);
-                response.send(123, err);
+                var error = resultFormatter.fail(apiVersion, 500, e);
+                response.send(500, err);
             });
     })
+});
+
+
+router.post('/image/', (request, response, next) => {
+    var dateFormat = "DD MMM YYYY";
+    var locale = 'id-ID';
+    var moment = require('moment');
+    moment.locale(locale);
+
+
+    db.get().then(db => {
+
+        console.log(request.files.imageUpload);
+        console.log(request.files.motifUpload);
+
+        var colorCode = request.body["colorCode"];
+        var articleColor = request.body["article-color"];
+        var products = request.body["products"];
+
+        var uploadHelper = require('../../../upload-helper')
+        PkgCloudHelper.getStorageClient()
+            .then((storageClient) => {
+                var uploadFileProcess = [];
+                uploadFileProcess.push(uploadHelper.uploadFile(request.files.imageUpload, storageClient, "bateeq-product-image"));
+                uploadFileProcess.push(uploadHelper.uploadFile(request.files.motifUpload, storageClient, "bateeq-motif-image"));
+                Promise.all(uploadFileProcess)
+                    .then((results) => {
+                        var result = resultFormatter.ok(apiVersion, 200, results);
+                        response.send(200, result);
+                    })
+                    .catch((errorResults) => {
+                        var error = resultFormatter.fail(apiVersion, 500, errorResults);
+                        response.send(500, error);
+                    });
+            })
+            .catch((err) => {
+
+            });
+    });
+});
+
+
+router.post('/product-image/', (request, response, next) => {
+
+    db.get().then(db => {
+
+        var manager = new FinishedGoodsManager(db, {
+            username: 'router'
+        });
+
+
+        var data = request.body;
+
+        manager.updateImage(data.colorCode, data.articleColor, data.products,data.imagePath, data.motifPath)
+            .then(updateResults => {
+                var result = resultFormatter.ok(apiVersion, 201, updateResults);
+                response.send(201, result);
+            })
+            .catch(updateErrors => {
+                var error = resultFormatter.fail(apiVersion, 500, updateErrors);
+                response.send(500, error);
+            });
+    });
 });
 
 module.exports = router;
