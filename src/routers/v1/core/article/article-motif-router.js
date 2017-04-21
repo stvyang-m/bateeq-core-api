@@ -48,6 +48,30 @@ router.get('v1/core/articles/motifs/:id', (request, response, next) => {
     })
 });
 
+router.get('v1/core/articles/motifs/code/:code', (request, response, next) => {
+    db.get().then(db => {
+        var manager = new ArticleMotifManager(db, {
+            username: 'router'
+        });
+
+        var code = request.params.code;
+        var query = {
+            "code" : code
+        }
+
+        manager.getSingleByQuery(query)
+            .then(doc => {
+                var result = resultFormatter.ok(apiVersion, 200, doc);
+                response.send(200, result);
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            })
+
+    })
+});
+
 router.post('v1/core/articles/motifs', (request, response, next) => {
     db.get().then(db => {
         var manager = new ArticleMotifManager(db, {
