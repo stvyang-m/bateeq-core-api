@@ -66,7 +66,7 @@ var cardTypeRouter = require('./src/routers/v1/master/card-type-router');
 cardTypeRouter.applyRoutes(server, "v1/master/card-types");
 
 var uploadFinishedGoodsRouter = require('./src/routers/v1/master/upload-finished-goods-router');
-uploadFinishedGoodsRouter.applyRoutes(server, "v1/master/upload-finished-goods");
+uploadFinishedGoodsRouter.applyRoutes(server, "v1/master/upload");
 
 var finishedGoodsRouter = require('./src/routers/v1/master/finished-goods-router');
 finishedGoodsRouter.applyRoutes(server, "v1/master/items/finished-goods");
