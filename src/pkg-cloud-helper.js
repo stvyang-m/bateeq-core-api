@@ -11,7 +11,7 @@ var config = {
     username: 'admin_5d238012e1908120978584f07500373996db292f',
     password: 'gP4Jpa~M/K~r999V',
     region: 'dallas',//dallas or london region
-    projectid: '3d10d7cb-1ee2-46ec-97ee-7a5e243ebfaa'   
+    projectid: '3d10d7cb-1ee2-46ec-97ee-7a5e243ebfaa'
 };
 
 module.exports = {
@@ -26,6 +26,23 @@ module.exports = {
                     resolve(storageClient);
                 }
             });
+        });
+    },
+
+    download(container, file, callback) {
+        var client = pkgcloud.storage.createClient(config);
+        client.auth(function (error) {
+            if (error) {
+                console.error("Authorization error for storage client (pkgcloud): ", error);
+            }
+            else {
+                var request = client.download({
+                    container: container,
+                    remote: file
+                });
+
+                callback(request);
+            }
         });
     }
 }

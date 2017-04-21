@@ -83,8 +83,8 @@ router.post('/image/', (request, response, next) => {
 
     db.get().then(db => {
 
-        console.log(request.files.imageUpload);
-        console.log(request.files.motifUpload);
+        // console.log(request.files.imageUpload);
+        // console.log(request.files.motifUpload);
 
         var colorCode = request.body["colorCode"];
         var articleColor = request.body["article-color"];
