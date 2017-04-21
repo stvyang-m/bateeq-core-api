@@ -10,15 +10,14 @@ var csv = require('fast-csv');
 var PkgCloudHelper = require('../../../pkg-cloud-helper')
 
 const apiVersion = '1.0.0';
-//router.post('/', passport, (request, response, next) => {
-router.post('/', (request, response, next) => {
+router.post('/', passport, (request, response, next) => {
+    // router.post('/', (request, response, next) => {
     var dateFormat = "DD MMM YYYY";
     var locale = 'id-ID';
     var moment = require('moment');
     moment.locale(locale);
 
     db.get().then(db => {
-
         var dataCsv = [];
         var dataAll;
         // var manager = new FinishedGoodsManager(db, request.user);
@@ -33,7 +32,6 @@ router.post('/', (request, response, next) => {
             })
             .on('end', function (data) {
                 dataAll = dataCsv;
-
                 if (dataAll[0][0] === "Barcode" && dataAll[0][1] === "Nama" && dataAll[0][2] === "UOM" && dataAll[0][3] === "Size" && dataAll[0][4] === "HPP" && dataAll[0][5] === "Harga Jual (Domestic)" && dataAll[0][6] === "Harga Jual (Internasional)" && dataAll[0][7] === "RO") {
                     manager.insert(dataAll)
                         .then(doc => {

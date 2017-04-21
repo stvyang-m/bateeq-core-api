@@ -19,11 +19,17 @@
   "dependencies": {
 
     "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#uat",
+
     "fast-csv": "^2.3.0",
     "json2xls": "^0.1.2",
     "moment": "^2.17.1",
+    
     "pkgcloud" : "^1.4.0",
 
+    "js-toolkit": "git+https://github.com/pinkgorilla/js-toolkit.git",
+    "module-toolkit": "git+https://github.com/pinkgorilla/module-toolkit.git",
+    "mongodb-toolkit": "git+https://github.com/pinkgorilla/mongodb-toolkit.git",
+    
     "mongo-factory": "^1.0.0",
     "mongodb": "^2.2.1",
     "passport": "^0.3.2",
