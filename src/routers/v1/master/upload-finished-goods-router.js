@@ -7,6 +7,7 @@ var passport = require('../../../passports/jwt-passport');
 var FinishedGoodsManager = require('bateeq-module').master.FinishedGoodsManager;
 var fs = require('fs');
 var csv = require('fast-csv');
+var PkgCloudHelper = require('../../../pkg-cloud-helper')
 
 const apiVersion = '1.0.0';
 router.post('/', passport, (request, response, next) => {
@@ -19,10 +20,10 @@ router.post('/', passport, (request, response, next) => {
     db.get().then(db => {
         var dataCsv = [];
         var dataAll;
-        var manager = new FinishedGoodsManager(db, request.user);
-        // var manager = new FinishedGoodsManager(db, {
-        //     username: 'router'
-        // }); 
+        // var manager = new FinishedGoodsManager(db, request.user);
+        var manager = new FinishedGoodsManager(db, {
+            username: 'router'
+        });
 
         fs.createReadStream(request.files.fileUpload.path)
             .pipe(csv())
@@ -55,8 +56,8 @@ router.post('/', passport, (request, response, next) => {
                             }
                         })
                         .catch(e => {
-                            var error = resultFormatter.fail(apiVersion, 111, e);
-                            response.send(111, error);
+                            var error = resultFormatter.fail(apiVersion, 500, e);
+                            response.send(500, error);
                         })
                 } else {
                     var error = resultFormatter.fail(apiVersion, 401, "");
@@ -64,10 +65,73 @@ router.post('/', passport, (request, response, next) => {
                 }
             })
             .on("error", (err) => {
-                var error = resultFormatter.fail(apiVersion, 123, e);
-                response.send(123, err);
+                var error = resultFormatter.fail(apiVersion, 500, e);
+                response.send(500, err);
             });
     })
+});
+
+
+router.post('/image/', (request, response, next) => {
+    var dateFormat = "DD MMM YYYY";
+    var locale = 'id-ID';
+    var moment = require('moment');
+    moment.locale(locale);
+
+
+    db.get().then(db => {
+
+        // console.log(request.files.imageUpload);
+        // console.log(request.files.motifUpload);
+
+        var colorCode = request.body["colorCode"];
+        var articleColor = request.body["article-color"];
+        var products = request.body["products"];
+
+        var uploadHelper = require('../../../upload-helper')
+        PkgCloudHelper.getStorageClient()
+            .then((storageClient) => {
+                var uploadFileProcess = [];
+                uploadFileProcess.push(uploadHelper.uploadFile(request.files.imageUpload, storageClient, "bateeq-product-image"));
+                uploadFileProcess.push(uploadHelper.uploadFile(request.files.motifUpload, storageClient, "bateeq-motif-image"));
+                Promise.all(uploadFileProcess)
+                    .then((results) => {
+                        var result = resultFormatter.ok(apiVersion, 200, results);
+                        response.send(200, result);
+                    })
+                    .catch((errorResults) => {
+                        var error = resultFormatter.fail(apiVersion, 500, errorResults);
+                        response.send(500, error);
+                    });
+            })
+            .catch((err) => {
+
+            });
+    });
+});
+
+
+router.post('/product-image/', (request, response, next) => {
+
+    db.get().then(db => {
+
+        var manager = new FinishedGoodsManager(db, {
+            username: 'router'
+        });
+
+
+        var data = request.body;
+
+        manager.updateImage(data.colorCode, data.articleColor, data.products,data.imagePath, data.motifPath)
+            .then(updateResults => {
+                var result = resultFormatter.ok(apiVersion, 201, updateResults);
+                response.send(201, result);
+            })
+            .catch(updateErrors => {
+                var error = resultFormatter.fail(apiVersion, 500, updateErrors);
+                response.send(500, error);
+            });
+    });
 });
 
 module.exports = router;

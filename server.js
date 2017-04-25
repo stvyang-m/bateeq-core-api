@@ -35,8 +35,11 @@ server.use(function (request, response, next) {
 // var materialRouter = require('./src/routers/v1/core/article/article-material-router');
 // materialRouter.applyRoutes(server);
 
-// var motifRouter = require('./src/routers/v1/core/article/article-motif-router');
-// motifRouter.applyRoutes(server);
+var motifRouter = require('./src/routers/v1/core/article/article-motif-router');
+motifRouter.applyRoutes(server);
+
+var colorRouter = require('./src/routers/v1/core/article/article-color-router');
+colorRouter.applyRoutes(server);
 
 // var originRouter = require('./src/routers/v1/core/article/article-origin-router');
 // originRouter.applyRoutes(server);
