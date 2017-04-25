@@ -20,10 +20,10 @@ router.post('/', passport, (request, response, next) => {
     db.get().then(db => {
         var dataCsv = [];
         var dataAll;
-        // var manager = new FinishedGoodsManager(db, request.user);
-        var manager = new FinishedGoodsManager(db, {
-            username: 'router'
-        });
+        var manager = new FinishedGoodsManager(db, request.user);
+        // var manager = new FinishedGoodsManager(db, {
+        //     username: 'router'
+        // });
 
         fs.createReadStream(request.files.fileUpload.path)
             .pipe(csv())
