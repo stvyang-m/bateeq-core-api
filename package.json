@@ -18,7 +18,8 @@
   "homepage": "https://github.com/danliris/bateeq-core-api#readme",
   "dependencies": {
 
-    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#uat",
+
+    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git",
 
     "fast-csv": "^2.3.0",
     "json2xls": "^0.1.2",
