@@ -14,6 +14,9 @@ router.get('/', (request, response, next) => {
         });
 
         var query = request.query;
+         query.order = {
+            '_updatedDate': -1
+        };
 
         manager.read(query)
             .then(docs => {
