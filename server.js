@@ -92,6 +92,9 @@ storeRouter.applyRoutes(server, "v1/master/stores");
 var supplierRouter = require('./src/routers/v1/master/supplier-router');
 supplierRouter.applyRoutes(server, "v1/master/suppliers");
 
+var expeditionServiceRouter = require('./src/routers/v1/master/expedition-service-router');
+expeditionServiceRouter.applyRoutes(server, "v1/master/expedition-service-routers");
+
 var powerBiReportRouter = require('./src/routers/v1/core/power-bi-report-router');
 powerBiReportRouter.applyRoutes(server, "/v1/core/power-bi/reports");
 
