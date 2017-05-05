@@ -128,8 +128,8 @@ router.post('/product-image/', (request, response, next) => {
                 response.send(201, result);
             })
             .catch(updateErrors => {
-                var error = resultFormatter.fail(apiVersion, 500, updateErrors);
-                response.send(500, error);
+                var error = resultFormatter.fail(apiVersion, 400, updateErrors);
+                response.send(400, error);
             });
     });
 });
