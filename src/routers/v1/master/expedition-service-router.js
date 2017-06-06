@@ -1,23 +1,24 @@
 var Router = require('restify-router').Router;
 var router = new Router();
-var BankManager = require('bateeq-module').master.BankManager;
+var ExpeditionServiceManager = require('bateeq-module').master.ExpeditionServiceManager;
 var db = require('../../../db');
 var resultFormatter = require("../../../result-formatter");
-var passport = require('../../../passports/jwt-passport');
 
 const apiVersion = '1.0.0';
 
-router.get('/', passport, (request, response, next) => {
+router.get('/', (request, response, next) => {
     db.get().then(db => {
-        var manager = new BankManager(db, request.user);
+        var manager = new ExpeditionServiceManager(db, {
+            username: 'router'
+        });
+        
         var query = request.query;
 
         manager.read(query)
-            .then(docs => {
+            .then(docs => { 
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
                 result.info = docs;
-                result.data.sort((dataA, dataB) => {return new Date(dataB._updatedDate).getTime() - new Date(dataA._updatedDate).getTime()});
                 response.send(200, result);
             })
             .catch(e => {
@@ -28,15 +29,39 @@ router.get('/', passport, (request, response, next) => {
     });
 });
 
-router.get('/:id', passport, (request, response, next) => {
+router.get('/all', (request, response, next) => {
     db.get().then(db => {
-        var manager = new BankManager(db, request.user);
+        var manager = new ExpeditionServiceManager(db, {
+            username: 'router'
+        });
+
+        manager.readAll()
+            .then(docs => { 
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
+                response.send(200, result);
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            });
+
+    });
+});
+
+router.get('/:id', (request, response, next) => {
+    db.get().then(db => {
+        var manager = new ExpeditionServiceManager(db, {
+            username: 'router'
+        });
+        
         var id = request.params.id;
 
         manager.getSingleById(id)
             .then(doc => {
                 var result = resultFormatter.ok(apiVersion, 200, doc);
-                response.send(200, result);
+                response.send(200, result); 
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
@@ -46,9 +71,12 @@ router.get('/:id', passport, (request, response, next) => {
     });
 });
 
-router.post('/', passport, (request, response, next) => {
+router.post('/', (request, response, next) => {
     db.get().then(db => {
-        var manager = new BankManager(db, request.user);
+        var manager = new ExpeditionServiceManager(db, {
+            username: 'router'
+        });
+        
         var data = request.body;
 
         manager.create(data)
@@ -65,9 +93,12 @@ router.post('/', passport, (request, response, next) => {
     });
 });
 
-router.put('/:id', passport, (request, response, next) => {
+router.put('/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new BankManager(db, request.user);
+        var manager = new ExpeditionServiceManager(db, {
+            username: 'router'
+        });
+        
         var id = request.params.id;
         var data = request.body;
 
@@ -84,24 +115,19 @@ router.put('/:id', passport, (request, response, next) => {
     });
 });
 
-router.del('/:id', passport, (request, response, next) => {
+router.del('/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new BankManager(db, request.user);
-        var now = new Date();
+        var manager = new ExpeditionServiceManager(db, {
+            username: 'router'
+        });
+        
         var id = request.params.id;
+        var data = request.body;
 
-        manager.getSingleById(id)
-            .then(data => {
-                manager.delete(data)
-                    .then(docId => {
-                        data._updatedDate = now;
-                        var result = resultFormatter.ok(apiVersion, 204);
-                        response.send(204, result);
-                    })
-                    .catch(e => {
-                        var error = resultFormatter.fail(apiVersion, 400, e);
-                        response.send(400, error);
-                    });
+        manager.delete(data)
+            .then(docId => {
+                var result = resultFormatter.ok(apiVersion, 204);
+                response.send(204, result);
             })
             .catch(e => {
                 var error = resultFormatter.fail(apiVersion, 400, e);
