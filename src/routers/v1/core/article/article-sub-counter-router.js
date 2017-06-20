@@ -1,14 +1,14 @@
 var Router = require('restify-router').Router;;
 var router = new Router();
-var ArticleCounterManager = require('bateeq-module').master.article.ArticleCounterManager;
+var ArticleSubCounterManager = require('bateeq-module').master.article.ArticleSubCounterManager;
 var db = require('../../../../db');
 var resultFormatter = require("../../../../result-formatter");
 
 const apiVersion = '1.0.0';
 
-router.get('v1/core/articles/counters', (request, response, next) => {
+router.get('v1/core/articles/subCounters', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleCounterManager(db, {
+        var manager = new ArticleSubCounterManager(db, {
             username: 'router'
         });
         var query = request.query;
@@ -24,9 +24,9 @@ router.get('v1/core/articles/counters', (request, response, next) => {
     })
 });
 
-router.get('v1/core/articles/counters/:id', (request, response, next) => {
+router.get('v1/core/articles/subCounters/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleCounterManager(db, {
+        var manager = new ArticleSubCounterManager(db, {
             username: 'router'
         });
         var id = request.params.id;
@@ -42,15 +42,15 @@ router.get('v1/core/articles/counters/:id', (request, response, next) => {
     })
 });
 
-router.post('v1/core/articles/counters', (request, response, next) => {
+router.post('v1/core/articles/subCounters', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleCounterManager(db, {
+        var manager = new ArticleSubCounterManager(db, {
             username: 'router'
         });
         var data = request.body;
         manager.create(data)
             .then(docId => {
-                response.header('Location', `articles/counters/${docId.toString()}`);
+                response.header('Location', `articles/subCounters/${docId.toString()}`);
                 var result = resultFormatter.ok(apiVersion, 201);
                 response.send(201, result);
             })
@@ -61,9 +61,9 @@ router.post('v1/core/articles/counters', (request, response, next) => {
     })
 });
 
-router.put('v1/core/articles/counters/:id', (request, response, next) => {
+router.put('v1/core/articles/subCounters/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleCounterManager(db, {
+        var manager = new ArticleSubCounterManager(db, {
             username: 'router'
         });
         var id = request.params.id;
@@ -80,9 +80,9 @@ router.put('v1/core/articles/counters/:id', (request, response, next) => {
     })
 });
 
-router.del('v1/core/articles/counters/:id', (request, response, next) => {
+router.del('v1/core/articles/subCounters/:id', (request, response, next) => {
     db.get().then(db => {
-        var manager = new ArticleCounterManager(db, {
+        var manager = new ArticleSubCounterManager(db, {
             username: 'router'
         });
         var id = request.params.id;
