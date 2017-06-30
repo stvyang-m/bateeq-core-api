@@ -59,6 +59,9 @@ subProcessRouter.applyRoutes(server);
 var colorRouter = require('./src/routers/v1/core/article/article-color-router');
 colorRouter.applyRoutes(server);
 
+var rangeDiscProductRouter = require('./src/routers/v1/master/range-disc-product-router');
+rangeDiscProductRouter.applyRoutes(server, "v1/master/range-disc-products");
+
 var bankRouter = require('./src/routers/v1/master/bank-router');
 bankRouter.applyRoutes(server, "v1/master/banks");
 
