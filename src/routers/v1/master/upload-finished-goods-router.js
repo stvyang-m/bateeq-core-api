@@ -105,7 +105,8 @@ router.post('/image/', (request, response, next) => {
                     });
             })
             .catch((err) => {
-
+                var error = resultFormatter.fail(apiVersion, 500, errorResults);
+                response.send(500, error);
             });
     });
 });
@@ -122,7 +123,8 @@ router.post('/product-image/', (request, response, next) => {
 
         var data = request.body;
 
-        manager.updateImage(data.colorCode, data.articleColor, data.products,data.imagePath, data.motifPath)
+
+        manager.updateImage(data)
             .then(updateResults => {
                 var result = resultFormatter.ok(apiVersion, 201, updateResults);
                 response.send(201, result);
