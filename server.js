@@ -23,44 +23,41 @@ server.use(function (request, response, next) {
     request.queryInfo = query;
     next();
 });
-// var brandRouter = require('./src/routers/v1/core/article/article-brand-router');
-// brandRouter.applyRoutes(server);
-
-// var categoryRouter = require('./src/routers/v1/core/article/article-category-router');
-// categoryRouter.applyRoutes(server);
-
-// var counterRouter = require('./src/routers/v1/core/article/article-counter-router');
-// counterRouter.applyRoutes(server);
-
-// var materialRouter = require('./src/routers/v1/core/article/article-material-router');
-// materialRouter.applyRoutes(server);
-
 var motifRouter = require('./src/routers/v1/core/article/article-motif-router');
 motifRouter.applyRoutes(server);
 
+var materialRouter = require('./src/routers/v1/core/article/article-material-router');
+materialRouter.applyRoutes(server);
+
+var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
+seasonRouter.applyRoutes(server);
+
+var counterRouter = require('./src/routers/v1/core/article/article-counter-router');
+counterRouter.applyRoutes(server);
+
+var subCounterRouter = require('./src/routers/v1/core/article/article-sub-counter-router');
+subCounterRouter.applyRoutes(server);
+
+var collectionRouter = require('./src/routers/v1/core/article/article-collection-router');
+collectionRouter.applyRoutes(server);
+
+var subCollectionRouter = require('./src/routers/v1/core/article/article-sub-collection-router');
+subCollectionRouter.applyRoutes(server);
+
+var materialCompositionRouter = require('./src/routers/v1/core/article/article-material-composition-router');
+materialCompositionRouter.applyRoutes(server);
+
+var subMaterialCompositionRouter = require('./src/routers/v1/core/article/article-sub-material-composition-router');
+subMaterialCompositionRouter.applyRoutes(server);
+
+var processRouter = require('./src/routers/v1/core/article/article-process-router');
+processRouter.applyRoutes(server);
+
+var subProcessRouter = require('./src/routers/v1/core/article/article-sub-process-router');
+subProcessRouter.applyRoutes(server);
+
 var colorRouter = require('./src/routers/v1/core/article/article-color-router');
 colorRouter.applyRoutes(server);
-
-// var originRouter = require('./src/routers/v1/core/article/article-origin-router');
-// originRouter.applyRoutes(server);
-
-// var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
-// seasonRouter.applyRoutes(server);
-
-// var themeRouter = require('./src/routers/v1/core/article/article-theme-router');
-// themeRouter.applyRoutes(server);
-
-// var typeRouter = require('./src/routers/v1/core/article/article-type-router');
-// typeRouter.applyRoutes(server);
-
-// var variantRouter = require('./src/routers/v1/core/article/article-variant-router');
-// variantRouter.applyRoutes(server);
-
-// var articleRouter = require('./src/routers/v1/core/article/article-router');
-// articleRouter.applyRoutes(server);
-
-// var moduleRouter = require('./src/routers/v1/core/module-router');
-// moduleRouter.applyRoutes(server);
 
 var bankRouter = require('./src/routers/v1/master/bank-router');
 bankRouter.applyRoutes(server, "v1/master/banks");
@@ -73,9 +70,6 @@ uploadFinishedGoodsRouter.applyRoutes(server, "v1/master/upload");
 
 var finishedGoodsRouter = require('./src/routers/v1/master/finished-goods-router');
 finishedGoodsRouter.applyRoutes(server, "v1/master/items/finished-goods");
-
-var materialRouter = require('./src/routers/v1/master/material-router');
-materialRouter.applyRoutes(server, "v1/master/items/materials");
 
 var itemRouter = require('./src/routers/v1/master/item-router');
 itemRouter.applyRoutes(server, "v1/master/items");
@@ -139,7 +133,4 @@ var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 var host = process.env.VCAP_APP_HOST || process.env.IP || "0.0.0.0";
 
 server.listen(port, host);
-console.log(`server created at ${host}:${port}`);
-
-//server.listen(process.env.PORT, process.env.IP);
-//console.log(`server created at ${process.env.IP}:${process.env.PORT}`);
+console.log(`server created at ${host}:${port}`); 
