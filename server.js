@@ -126,7 +126,7 @@ var etlDim = require('./src/routers/v1/etl/etl-dim-router');
 etlDim.applyRoutes(server, "/v1/etl/dim");
 
 var etlUpdateProduct = require('./src/routers/v1/etl/etl-update-products');
-etlUpdateProduct.applyRoutes(server, "/v1/etl/updateProduct");
+etlUpdateProduct.applyRoutes(server, "/v1/etl/update-product");
 
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
