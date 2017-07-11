@@ -29,6 +29,9 @@ motifRouter.applyRoutes(server);
 var materialRouter = require('./src/routers/v1/core/article/article-material-router');
 materialRouter.applyRoutes(server);
 
+var categoryRouter = require('./src/routers/v1/core/article/article-category-router');
+categoryRouter.applyRoutes(server);
+
 var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
 seasonRouter.applyRoutes(server);
 
