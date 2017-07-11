@@ -19,7 +19,9 @@
   "dependencies": {
 
 
-    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#dev",
+
+    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git",
+
 
 
     "fast-csv": "^2.3.0",
