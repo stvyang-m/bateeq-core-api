@@ -14,7 +14,7 @@ router.get('v1/core/articles/categories', (request, response, next) => {
         var query = request.query;
         manager.read(query)
             .then(docs => {
-                var result = resultFormatter.ok(apiVersion, 200, docs);
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 response.send(200, result);
             })
             .catch(e => {
@@ -32,7 +32,7 @@ router.get('v1/core/articles/categories/:id', (request, response, next) => {
         var id = request.params.id;
         manager.getSingleById(id)
             .then(doc => {
-                var result = resultFormatter.ok(apiVersion, 200, doc);
+                var result = resultFormatter.ok(apiVersion, 200, doc.data);
                 response.send(200, result);
             })
             .catch(e => {

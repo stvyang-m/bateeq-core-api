@@ -93,7 +93,7 @@ router.post('/image/', (request, response, next) => {
             .then((storageClient) => {
                 var uploadFileProcess = [];
                 uploadFileProcess.push(uploadHelper.uploadFile(request.files.imageUpload, storageClient, "bateeq-product-image"));
-                uploadFileProcess.push(uploadHelper.uploadFile(request.files.motifUpload, storageClient, "bateeq-motif-image"));
+                // uploadFileProcess.push(uploadHelper.uploadFile(request.files.motifUpload, storageClient, "bateeq-motif-image"));
                 Promise.all(uploadFileProcess)
                     .then((results) => {
                         var result = resultFormatter.ok(apiVersion, 200, results);
