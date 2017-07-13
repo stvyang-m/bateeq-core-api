@@ -21,7 +21,7 @@
 
 
 
-    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git#uat",
+    "bateeq-module": "git+https://github.com/danliris/bateeq-module.git",
 
 
 
