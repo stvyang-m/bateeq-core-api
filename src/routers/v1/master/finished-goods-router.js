@@ -90,7 +90,7 @@ router.get('/ro/:ro', (request, response, next) => {
             'article.realizationOrder': ro
         };
 
-        manager.read(query)
+        manager.readAll(query)
             .then(docs => {
                 var result = resultFormatter.ok(apiVersion, 200, docs.data);
                 delete docs.data;
