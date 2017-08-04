@@ -7,6 +7,33 @@ var PkgCloudHelper = require('../../../pkg-cloud-helper')
 
 const apiVersion = '1.0.0';
 
+router.get('/readAll/:imagePath', (request, response, next) => {
+    db.get().then(db => {
+        var manager = new FinishedGoodsManager(db, {
+            username: 'router'
+        });
+        var query = request.query;
+        var imagePath = request.params.imagePath;
+        query.filter = {
+            'imagePath': {
+                '$regex': imagePath
+            }
+        };
+
+        manager.readAll(query)
+            .then(docs => {
+                var result = resultFormatter.ok(apiVersion, 200, docs.data);
+                delete docs.data;
+                result.info = docs;
+                response.send(200, result);
+            })
+            .catch(e => {
+                var error = resultFormatter.fail(apiVersion, 400, e);
+                response.send(400, error);
+            });
+    });
+});
+
 router.get('/', (request, response, next) => {
     db.get().then(db => {
         var manager = new FinishedGoodsManager(db, {
@@ -14,7 +41,7 @@ router.get('/', (request, response, next) => {
         });
 
         var query = request.query;
-         query.order = {
+        query.order = {
             '_updatedDate': -1
         };
 
@@ -79,6 +106,8 @@ router.get('/code/:code', (request, response, next) => {
     });
 });
 
+
+
 router.get('/ro/:ro', (request, response, next) => {
     db.get().then(db => {
         var manager = new FinishedGoodsManager(db, {
@@ -103,6 +132,8 @@ router.get('/ro/:ro', (request, response, next) => {
             });
     });
 });
+
+
 
 router.get('/image/:id', (request, response, next, res) => {
     db.get().then(db => {
