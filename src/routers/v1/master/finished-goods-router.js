@@ -115,8 +115,9 @@ router.get('/ro/:ro', (request, response, next) => {
         });
         var query = request.query;
         var ro = request.params.ro;
+        var roTemp=  decodeURIComponent(ro);
         query.filter = {
-            'article.realizationOrder': ro
+            'article.realizationOrder': roTemp
         };
 
         manager.readAll(query)
