@@ -68,6 +68,9 @@ rangeDiscProductRouter.applyRoutes(server, "v1/master/range-disc-products");
 var bankRouter = require('./src/routers/v1/master/bank-router');
 bankRouter.applyRoutes(server, "v1/master/banks");
 
+var unitRouter = require('./src/routers/v1/master/unit-router');
+unitRouter.applyRoutes(server, "v1/master/units");
+
 var cardTypeRouter = require('./src/routers/v1/master/card-type-router');
 cardTypeRouter.applyRoutes(server, "v1/master/card-types");
 
