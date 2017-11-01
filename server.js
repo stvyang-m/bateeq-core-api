@@ -62,6 +62,9 @@ subProcessRouter.applyRoutes(server);
 var colorRouter = require('./src/routers/v1/core/article/article-color-router');
 colorRouter.applyRoutes(server);
 
+var typeRouter = require('./src/routers/v1/core/article/article-type-router');
+typeRouter.applyRoutes(server);
+
 var rangeDiscProductRouter = require('./src/routers/v1/master/range-disc-product-router');
 rangeDiscProductRouter.applyRoutes(server, "v1/master/range-disc-products");
 
@@ -136,6 +139,18 @@ etlDim.applyRoutes(server, "/v1/etl/dim");
 
 var etlUpdateProduct = require('./src/routers/v1/etl/etl-update-products');
 etlUpdateProduct.applyRoutes(server, "/v1/etl/update-product");
+
+let designTrackingBoardRouter = require('./src/routers/v1/manufacture/design-tracking-board-router');
+designTrackingBoardRouter().applyRoutes(server, "v1/manufacture/design-tracking-boards");
+
+let designTrackingStageRouter = require('./src/routers/v1/manufacture/design-tracking-stage-router');
+designTrackingStageRouter().applyRoutes(server, "v1/manufacture/design-tracking-stages");
+
+let designTrackingDesignRouter = require('./src/routers/v1/manufacture/design-tracking-design-router');
+designTrackingDesignRouter().applyRoutes(server, "v1/manufacture/design-tracking-designs");
+
+let designTrackingActivityRouter = require('./src/routers/v1/manufacture/design-tracking-activity-router');
+designTrackingActivityRouter().applyRoutes(server, "v1/manufacture/design-tracking-activities");
 
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
