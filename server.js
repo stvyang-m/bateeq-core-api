@@ -152,6 +152,9 @@ designTrackingDesignRouter().applyRoutes(server, "v1/manufacture/design-tracking
 let designTrackingActivityRouter = require('./src/routers/v1/manufacture/design-tracking-activity-router');
 designTrackingActivityRouter().applyRoutes(server, "v1/manufacture/design-tracking-activities");
 
+let designTrackingReasonRouter = require('./src/routers/v1/master/design-tracking-reason-router');
+designTrackingReasonRouter().applyRoutes(server, "v1/master/design-tracking-reasons");
+
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
 var host = process.env.VCAP_APP_HOST || process.env.IP || "0.0.0.0";
