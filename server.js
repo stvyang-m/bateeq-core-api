@@ -30,7 +30,7 @@ var materialRouter = require('./src/routers/v1/core/article/article-material-rou
 materialRouter.applyRoutes(server);
 
 var categoryRouter = require('./src/routers/v1/core/article/article-category-router');
-categoryRouter.applyRoutes(server);
+categoryRouter.applyRoutes(server, 'v1/master/categories');
 
 var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
 seasonRouter.applyRoutes(server);
@@ -154,6 +154,12 @@ designTrackingActivityRouter().applyRoutes(server, "v1/manufacture/design-tracki
 
 let designTrackingReasonRouter = require('./src/routers/v1/master/design-tracking-reason-router');
 designTrackingReasonRouter().applyRoutes(server, "v1/master/design-tracking-reasons");
+
+var budgetRouter = require('./src/routers/v1/master/budget-router');
+budgetRouter().applyRoutes(server, 'v1/master/budgets');
+
+var productRouter = require("./src/routers/v1/master/product-router");
+productRouter().applyRoutes(server, 'v1/master/products');
 
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
