@@ -30,7 +30,7 @@ var materialRouter = require('./src/routers/v1/core/article/article-material-rou
 materialRouter.applyRoutes(server);
 
 var categoryRouter = require('./src/routers/v1/core/article/article-category-router');
-categoryRouter.applyRoutes(server, 'v1/master/categories');
+categoryRouter.applyRoutes(server, 'v1/master/article-categories');
 
 var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
 seasonRouter.applyRoutes(server);
@@ -160,6 +160,9 @@ budgetRouter().applyRoutes(server, 'v1/master/budgets');
 
 var productRouter = require("./src/routers/v1/master/product-router");
 productRouter().applyRoutes(server, 'v1/master/products');
+
+var purchasingCategoryRouter = require('./src/routers/v1/master/purchasing-category-router');
+purchasingCategoryRouter().applyRoutes(server, 'v1/master/categories');
 
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
