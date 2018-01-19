@@ -30,7 +30,7 @@ var materialRouter = require('./src/routers/v1/core/article/article-material-rou
 materialRouter.applyRoutes(server);
 
 var categoryRouter = require('./src/routers/v1/core/article/article-category-router');
-categoryRouter.applyRoutes(server, 'v1/master/article-categories');
+categoryRouter.applyRoutes(server);
 
 var seasonRouter = require('./src/routers/v1/core/article/article-season-router');
 seasonRouter.applyRoutes(server);
