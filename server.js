@@ -96,7 +96,7 @@ var storeRouter = require('./src/routers/v1/master/store-router');
 storeRouter.applyRoutes(server, "v1/master/stores");
 
 var supplierRouter = require('./src/routers/v1/master/supplier-router');
-supplierRouter.applyRoutes(server, "v1/master/suppliers");
+supplierRouter().applyRoutes(server, "v1/master/suppliers");
 
 var expeditionServiceRouter = require('./src/routers/v1/master/expedition-service-router');
 expeditionServiceRouter.applyRoutes(server, "v1/master/expedition-service-routers");
