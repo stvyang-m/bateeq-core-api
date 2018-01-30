@@ -158,11 +158,23 @@ designTrackingReasonRouter().applyRoutes(server, "v1/master/design-tracking-reas
 var budgetRouter = require('./src/routers/v1/master/budget-router');
 budgetRouter().applyRoutes(server, 'v1/master/budgets');
 
+var purchasingCategoryRouter = require('./src/routers/v1/master/purchasing-category-router');
+purchasingCategoryRouter().applyRoutes(server, 'v1/master/categories');
+
+var uomRouter = require('./src/routers/v1/master/uom-router');
+uomRouter().applyRoutes(server, 'v1/master/uoms');
+
+var vatRouter = require('./src/routers/v1/master/vat-router');
+vatRouter().applyRoutes(server, 'v1/master/vats');
+
+var productByIdRouter = require('./src/routers/v1/master/product-by-id-router');
+productByIdRouter().applyRoutes(server, 'v1/master/products/byId');
+
 var productRouter = require("./src/routers/v1/master/product-router");
 productRouter().applyRoutes(server, 'v1/master/products');
 
-var purchasingCategoryRouter = require('./src/routers/v1/master/purchasing-category-router');
-purchasingCategoryRouter().applyRoutes(server, 'v1/master/categories');
+var currenciesRouter = require("./src/routers/v1/master/currency-router");
+currenciesRouter().applyRoutes(server, 'v1/master/currencies');
 
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
