@@ -179,6 +179,9 @@ currenciesRouter().applyRoutes(server, 'v1/master/currencies');
 var uploadProductRouter = require("./src/routers/v1/master/upload-product-router");
 uploadProductRouter().applyRoutes(server, 'v1/master/upload-products')
 
+var uploadSupplierRouter = require('./src/routers/v1/master/upload-supplier-router');
+uploadSupplierRouter().applyRoutes(server, "v1/master/upload-suppliers");
+
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
 var host = process.env.VCAP_APP_HOST || process.env.IP || "0.0.0.0";
