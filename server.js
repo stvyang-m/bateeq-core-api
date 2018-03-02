@@ -90,7 +90,7 @@ var moduleRouter = require('./src/routers/v1/master/module-router');
 moduleRouter.applyRoutes(server, "v1/master/modules");
 
 var storageRouter = require('./src/routers/v1/master/storage-router');
-storageRouter.applyRoutes(server, "v1/master/storages");
+storageRouter().applyRoutes(server, "v1/master/storages");
 
 var storeRouter = require('./src/routers/v1/master/store-router');
 storeRouter.applyRoutes(server, "v1/master/stores");
