@@ -183,7 +183,7 @@ var uploadSupplierRouter = require('./src/routers/v1/master/upload-supplier-rout
 uploadSupplierRouter().applyRoutes(server, "v1/master/upload-suppliers");
 
 var divisionRouter = require('./src/routers/v1/master/division-router');
-divisionRouter().applyRoutes(server, 'v1/master/divisions');
+divisionRouter().applyRoutes(server, 'v1/core/master/divisions');
 
 var port = process.env.VCAP_APP_PORT || process.env.PORT || 3000;
 
