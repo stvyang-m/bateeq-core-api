@@ -32,7 +32,7 @@ router.get('v1/core/articles/seasons/:id', (request, response, next) => {
         var id = request.params.id;
         manager.getSingleById(id)
             .then(doc => {
-                var result = resultFormatter.ok(apiVersion, 200, doc.data);
+                var result = resultFormatter.ok(apiVersion, 200, doc);
                 response.send(200, result);
             })
             .catch(e => {
