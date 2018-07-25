@@ -6,23 +6,16 @@ module.exports = {
   upload: function(container, folder, file) {
     return new Promise((resolve, reject) => {
       let blob = folder ? folder + "/" + file.name : file.name;
-
       const readStream = fs.createReadStream(file.path);
 
-      blobService.createContainerIfNotExists(container, function(
-        error,
-        result,
-        response
-      ) {
+      blobService.createContainerIfNotExists(container, function(error) {
         if (!error) {
           readStream.pipe(
             blobService.createWriteStreamToBlockBlob(container, blob, function(
-              error,
-              result,
-              response
+              error
             ) {
               if (!error) {
-                resolve(result);
+                resolve(file.name);
               } else {
                 reject(error);
               }
