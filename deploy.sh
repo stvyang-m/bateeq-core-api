@@ -15,6 +15,8 @@ mkdir -p out
 cp -a * out/.
 cd out
 rm -rf out
+rm -rf node_modules
+npm install
 
 git add .
 git commit -m "Automated Deployment"
