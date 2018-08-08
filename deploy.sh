@@ -1,6 +1,4 @@
-echo "Build"
-npm install
-npm run build:prod
+echo "API Deployment"
 
 git config --global user.email $GIT_EMAIL
 git config --global user.name $GIT_NAME
@@ -13,8 +11,10 @@ elif [ "$BRANCH" == "master" ]; then
     git clone $GIT_URL_MASTER out
 fi
 
-cp -a dist/. out/.
+mkdir -p out
+cp -a * out/.
 cd out
+rm -rf out
 
 git add .
 git commit -m "Automated Deployment"
